@@ -74,17 +74,11 @@ export function Projects() {
                                         ))}
                                     </div>
                                 </CardContent>
-                                <CardFooter className="flex gap-2">
-                                    <Button variant="outline" size="sm" className="flex-1" asChild>
-                                        <Link href={project.links.github} target="_blank">
-                                            <Github className="mr-2 h-4 w-4" />
-                                            Code
-                                        </Link>
-                                    </Button>
-                                    <Button size="sm" className="flex-1" asChild>
+                                <CardFooter>
+                                    <Button size="sm" className="w-full" asChild>
                                         <Link href={project.links.demo} target="_blank">
                                             <ExternalLink className="mr-2 h-4 w-4" />
-                                            Demo
+                                            View Demo
                                         </Link>
                                     </Button>
                                 </CardFooter>
