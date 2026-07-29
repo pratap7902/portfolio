@@ -21,6 +21,205 @@ export type Post = {
 
 export const posts: Post[] = [
     {
+        slug: "the-rise-of-the-builder",
+        title: "The handoff is the tax: why development is collapsing into the builder",
+        description:
+            "For decades we split building software across specialists and paid for it in handoffs. The tooling that forced those splits is dissolving. I think the next unit of software work is one person owning the whole loop — ideation to adoption — and companies should be racing to enable it.",
+        date: "2026-07-30",
+        readingMinutes: 8,
+        tags: ["opinion", "builder", "platform-engineering", "future-of-work"],
+        blocks: [
+            {
+                type: "p",
+                text: "For most of software's history we built it like a factory line. An idea was handed to a product manager, who handed a spec to a designer, who handed mockups to a backend engineer, who handed an API to a frontend engineer, who handed a build to QA, who handed a release to an ops team, who handed a running system to whoever watched the dashboards — and adoption was somebody else's problem entirely. Each seam was a role, and each role was a genuine specialty. I think that model is quietly ending, and the thing replacing it is a single person who owns the entire loop.",
+            },
+            {
+                type: "quote",
+                text: "Every handoff in that chain is a tax. It's a queue, a re-explanation, and a loss of context. The specialization was never the goal — it was the price we paid because touching each layer used to be genuinely hard. That price is collapsing.",
+            },
+            { type: "h", text: "Why we specialized in the first place" },
+            {
+                type: "p",
+                text: "The assembly line wasn't a mistake. It existed because each layer demanded deep, hard-won expertise and unforgiving tools. Standing up infrastructure meant racking servers or wrestling with raw cloud primitives. Shipping a UI that didn't look amateur took a trained designer. Getting to production safely required people whose whole job was release engineering. No one could hold all of it at once, so we cut the work along the lines of expertise — and then, per Conway's Law, our systems and org charts grew to mirror those cuts.",
+            },
+            {
+                type: "p",
+                text: "The cost was coordination. A feature that's a day of actual work can take three weeks of calendar time, almost all of it spent waiting in someone else's queue and re-establishing context that was clear in one head and blurry by the third handoff. We accepted that overhead because the alternative — one person doing all of it — meant one person being expert at all of it, which was impossible.",
+            },
+            { type: "h", text: "What actually changed" },
+            {
+                type: "p",
+                text: "It stopped being impossible. Not because people got smarter, but because the cost of touching each layer fell through the floor, mostly in the last few years:",
+            },
+            {
+                type: "ul",
+                items: [
+                    "Infrastructure became self-serve. Managed platforms, serverless, and infrastructure-as-code turned 'file a ticket with ops' into a few lines you write yourself.",
+                    "Design got democratized. Component libraries, design systems, and good defaults mean a competent engineer can ship something that looks intentional without a dedicated designer for every screen.",
+                    "AI coding agents compressed implementation. The gap between 'I can architect this' and 'I can also write the parts I'm rusty at' shrank dramatically. A backend engineer can now hold their own on the frontend, and vice versa, with an agent covering the unfamiliar ground.",
+                    "Observability and deployment became code. Feature flags, one-command deploys, dashboards-as-config, and alerting-as-code mean shipping and watching your own service no longer requires a separate priesthood.",
+                ],
+            },
+            {
+                type: "p",
+                text: "Put together, these don't make any single layer trivial — they make it feasible for one motivated person to be competent across all of them, and expert where it counts, with tooling absorbing the rest. That's the unlock. The builder isn't someone who is senior at seven disciplines. They're someone who owns the outcome and has finally been handed tools good enough to carry the whole loop without drowning.",
+            },
+            { type: "h", text: "This isn't a new dream — it's a newly affordable one" },
+            {
+                type: "p",
+                text: "The idea has strong precedent. Amazon institutionalized 'you build it, you run it' two decades ago, deliberately collapsing the wall between writing software and operating it. Netflix wrote about the 'full-cycle developer' who owns a service from design through operation, and was explicit about the catch: it only works when a platform team makes the hard parts easy. The instinct has been around for years. What's new is that the enabling tooling has finally caught up to the ambition, so this stops being a privilege of elite engineering orgs and becomes available to a solo builder on a normal team.",
+            },
+            {
+                type: "p",
+                text: "I'll admit my bias plainly: I've delivered platforms end to end this way — carrying something from a rough idea through design, implementation, deployment, and then watching it in production and pushing its adoption — and the compression is real. The feedback loop between 'I had a thought' and 'users are using it and I can see the graph move' is short enough that the work feels different in kind, not just in speed. When the person who imagined it is the same person watching the dashboard, nothing gets lost in translation because there's no translation.",
+            },
+            { type: "h", text: "The metric of success just moved" },
+            {
+                type: "p",
+                text: "Here's the deeper shift underneath all of this. When building was expensive, the scarce, valuable skill was building well — and so we measured engineers by the craft of the artifact. How clean is the code? How elegant the abstraction? That made sense when writing the thing was the hard, slow, costly part. But building is getting cheap. Iteration that used to cost a sprint now costs an afternoon; the second, third, and tenth version are nearly free. When the cost of producing and re-producing software falls this far, sky is the limit on how much you can try — and the bottleneck stops being production and becomes judgment.",
+            },
+            {
+                type: "quote",
+                text: "The old measure of a great engineer was how good the code they wrote was. The new measure is how much impact what they built creates for the end customer. Code was never the point; it was the expensive means. Now that the means is cheap, we can finally be honest that the outcome was always the goal.",
+            },
+            {
+                type: "p",
+                text: "This reframes the whole builder argument. Owning the loop end to end isn't about being a coding machine across seven disciplines — it's about being the person who keeps the customer's outcome in view through every layer, and uses cheap, fast iteration to chase it. If your beautiful code ships something nobody adopts, that used to be forgivable because the code was hard. It isn't hard anymore. What's hard, and now rare, is knowing what's worth building and reading whether it actually landed. That's the skill the era rewards.",
+            },
+            { type: "h", text: "Foresight gives way to the loop" },
+            {
+                type: "p",
+                text: "There's a practical consequence that changes how the work feels day to day. When building was expensive, getting it wrong was expensive, so the prized skill was foresight — architect it all upfront, anticipate every edge case, design the system so completely that you'd never have to unwind a bad decision. Big design up front wasn't dogma; it was rational insurance against a costly mistake.",
+            },
+            {
+                type: "p",
+                text: "Cheap iteration inverts that. When v0 costs an afternoon and rewriting it costs another, trying to foresee every issue is worse than useless — it's slower than just finding out. So the work becomes less about predicting the future and more about reacting to what actually shipped. It gets retrospective rather than far-sighted: you don't speculate about what might go wrong, you get v0 in front of reality, watch what really breaks, and fix that. Get v0 out, measure, iterate, repeat. The loop replaces the plan.",
+            },
+            {
+                type: "quote",
+                text: "Ship v0. Watch reality. Iterate. Reality is a better architect than your upfront guesses — and now it's cheap enough to just ask it.",
+            },
+            {
+                type: "p",
+                text: "This isn't license to stop thinking. The genuinely irreversible decisions — your data model, security posture, public contracts — still deserve real foresight, because those are the ones the loop can't cheaply undo. But for the vast majority of the work, a fast, honest loop beats a slow, clever plan. The builder's edge isn't seeing further than everyone else; it's closing the loop faster than everyone else.",
+            },
+            { type: "h", text: "The honest caveats" },
+            {
+                type: "p",
+                text: "I'm not claiming specialists are obsolete — that would be the lazy, hype version of this argument, and it's wrong. Deep expertise still wins where the problem is genuinely hard: novel infrastructure at scale, security, performance at the limit, the gnarly core of a domain. The builder model fits a specific and large class of work — zero-to-one products, internal tools, features, most of what most teams ship most of the time. The right mental model is a builder who goes deep in one or two areas and wide across the rest, and who knows exactly when to pull in a specialist rather than fake it.",
+            },
+            {
+                type: "ul",
+                items: [
+                    "Cognitive load is the real ceiling. One person owning everything can become one person overwhelmed by everything. The load has to be managed deliberately, not assumed away.",
+                    "Breadth can decay into shallowness. Owning the whole loop is not license to do every part badly; the bar for each layer still has to be met, with tools and review closing the gap.",
+                    "Some gates must stay gates. Security and certain compliance reviews aren't handoff tax to be eliminated — they're load-bearing. The art is removing the coordination overhead that adds no safety while keeping the checks that do.",
+                ],
+            },
+            { type: "h", text: "What companies should actually do" },
+            {
+                type: "p",
+                text: "If the builder is the emerging unit of work, then the highest-leverage thing a company can do is engineer its environment so that builders can exist without burning out. That is mostly a platform problem, and it's the opposite of hiring a person for every seam:",
+            },
+            {
+                type: "ul",
+                items: [
+                    "Build paved roads, not ticket queues. A platform team's job is to make the safe path the easy path — self-serve infra, golden templates, one-command deploys — so a builder never files a ticket to do routine work.",
+                    "Prefer guardrails over gates. Replace approval bottlenecks with automated policy, sane defaults, and blast-radius limits. Let people move fast inside boundaries you've made safe, instead of making them wait for permission.",
+                    "Make ownership real: you build it, you run it. Give builders production access, on-call for what they ship, and the observability to hold it — ownership without the keys is just blame.",
+                    "Invest in AI and internal tooling as first-class leverage. Every hour of a builder's unfamiliar-layer work that tooling can absorb is an hour returned to the outcome.",
+                    "Measure impact, not output. Reward the customer outcome a builder created, not the volume or even the craft of the code they wrote. When building is cheap, lines shipped and tickets closed are noise; adoption and impact are the signal. Promote on that, or Conway's Law will quietly rebuild the assembly line you were trying to dissolve.",
+                ],
+            },
+            {
+                type: "p",
+                text: "The companies that win the next decade won't be the ones with the most specialists per seam. They'll be the ones whose platforms make it feasible for a single motivated person to take an idea all the way to adopted, running software — and who then get out of that person's way. The handoff was always the tax. We finally have the tools to stop paying it.",
+            },
+        ],
+    },
+    {
+        slug: "the-outage-that-taught-me-kubernetes",
+        title: "The incident I couldn't follow — and how it made me learn Kubernetes",
+        description:
+            "Early in my career, a routine cluster upgrade took production down and I understood almost none of the words flying past in the incident channel. That discomfort is the best thing that happened to my engineering.",
+        date: "2026-07-29",
+        readingMinutes: 7,
+        tags: ["kubernetes", "learning", "incidents", "career"],
+        blocks: [
+            {
+                type: "p",
+                text: "Not long into my first engineering job, I watched a routine maintenance task take production down, and I sat there unable to follow the conversation about how to bring it back. That afternoon did more for my growth than any course I'd taken. This is a post about the value of being the least knowledgeable person in the incident channel — and what I did with that feeling afterwards.",
+            },
+            {
+                type: "p",
+                text: "The task was supposed to be boring: upgrade the version of our managed Kubernetes cluster. Control-plane version bumps are the kind of thing you schedule for a quiet window and expect to be a non-event. This one wasn't. The control plane came up fine, but the machines that actually run the workloads didn't reattach cleanly — and for a stretch, traffic couldn't reach services that were, by every dashboard I knew how to read, 'up.'",
+            },
+            {
+                type: "quote",
+                text: "Everything I thought I understood about 'the service is running' quietly fell apart. The pods were healthy. The nodes were healthy. And nothing worked. I had no vocabulary for the gap in between.",
+            },
+            { type: "h", text: "Being the person who doesn't get it" },
+            {
+                type: "p",
+                text: "The senior engineers moved fast and calmly. They talked about the data plane versus the control plane, nodes failing to register, traffic not being routed to healthy targets — a whole layer of the system I had never had to think about because it had always Just Worked. They coordinated, escalated where it made sense, and restored service methodically. I was mostly a spectator, and an uncomprehending one.",
+            },
+            {
+                type: "p",
+                text: "The honest, uncomfortable part: I could have written the application code running in those pods. I could not explain why healthy pods on healthy nodes were unreachable. There's a specific kind of embarrassment in realizing your mental model stops exactly at the boundary where the interesting failure happened. I decided I never wanted to be that passive in an incident again — not because passivity is shameful, but because the curiosity it triggered was too strong to ignore.",
+            },
+            { type: "h", text: "The questions I couldn't answer that day" },
+            {
+                type: "p",
+                text: "Once service was restored, I started writing down every phrase from the incident I hadn't understood, and turned each into a question. The list was humbling, and it became my syllabus:",
+            },
+            {
+                type: "ul",
+                items: [
+                    "What is actually the difference between the control plane and the data plane — and why can one be perfectly healthy while the other is broken?",
+                    "What does it mean for a node to 'register', and register with what? What is doing the registering?",
+                    "A pod is 'Running' and a node is 'Ready' — so what sits between them and the outside world, and why can that layer fail independently?",
+                    "How does a request even find its way from a load balancer to the right container on the right machine?",
+                    "Why is upgrading a cluster risky at all, if the containers themselves don't change?",
+                ],
+            },
+            { type: "h", text: "What learning it properly actually taught me" },
+            {
+                type: "p",
+                text: "I stopped treating Kubernetes as a magic box that my YAML went into. I learned it as a system with a clear split of responsibilities, and suddenly that day made sense in retrospect. The pieces that unlocked it for me:",
+            },
+            {
+                type: "ul",
+                items: [
+                    "Control plane vs data plane: the control plane decides what should be running and where; the data plane (the worker nodes and their agents) is what actually runs it and carries the traffic. An upgrade can leave the first pristine while breaking the second.",
+                    "The node agent and the proxy: each node runs an agent that reports in and accepts work, and a networking component that programs how traffic reaches pods. If a node comes back after an upgrade but doesn't correctly rejoin or reprogram its networking, its pods can look healthy and still be islands.",
+                    "Services and endpoints: a 'service' is a stable name in front of a shifting set of pods; the mapping from that name to real pod addresses is a live, mutable object. When that mapping or the load-balancer target registration is wrong, healthy pods receive no traffic.",
+                    "Why upgrades are genuinely risky: even when your containers are byte-for-byte identical, you're changing the substrate underneath them — node images, the agent, networking, the scheduler's assumptions. The workload didn't change; the ground it stands on did.",
+                ],
+            },
+            {
+                type: "p",
+                text: "None of this is advanced once someone lays it out — but nobody had, because I'd never needed it. The outage created the need, and the need made the learning stick in a way no tutorial ever had.",
+            },
+            { type: "h", text: "The actual lesson isn't about Kubernetes" },
+            {
+                type: "p",
+                text: "I now work on Kubernetes comfortably — debugging stuck pods, reasoning about node and consumer issues, and I no longer spectate during infra incidents. But the transferable takeaway isn't a pile of cluster knowledge. It's this: the boundary where you stop understanding a system is the most valuable map you'll ever get of what to learn next. An incident hands you that boundary for free, drawn in exactly the place that matters most.",
+            },
+            {
+                type: "ul",
+                items: [
+                    "Write down the words you didn't understand while they're fresh — that list is a better curriculum than any syllabus, because production chose it for you.",
+                    "Let senior engineers resolve the incident; study their vocabulary afterwards. The debrief is the lecture.",
+                    "Depth compounds downward: the layer just below the one you're comfortable in is almost always where the scary failures live, and learning it pays off disproportionately.",
+                ],
+            },
+            {
+                type: "p",
+                text: "I'm quietly grateful for that broken upgrade. It cost the team a stressful afternoon, but it handed me the single most useful thing an early-career engineer can get: a precise, undeniable demonstration of what I didn't know yet — and the motivation to go fix that.",
+            },
+        ],
+    },
+    {
         slug: "automating-a-hostile-web-portal",
         title: "Automating a portal that really doesn't want to be automated",
         description:
