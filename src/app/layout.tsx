@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
-import { Nunito } from "next/font/google";
+import { Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 
-const font = Nunito({
-  variable: "--font-sans",
+const display = Bricolage_Grotesque({
+  variable: "--font-display",
+  subsets: ["latin"],
+});
+
+const mono = IBM_Plex_Mono({
+  variable: "--font-mono",
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Chandra Pratap Singh Chauhan | Portfolio",
-  description: "Portfolio of Chandra Pratap Singh Chauhan - Software Engineer",
+  title: "Chandra Pratap Singh Chauhan — Backend & Applied AI",
+  description:
+    "Software Engineer II at UrbanPiper. Backend systems, ClickHouse analytics, event-driven pipelines, and production LLM agents (RAG, MCP, Claude Agent SDK).",
 };
-
-import { FloatingCats } from "@/components/floating-cats";
-
-// ... (existing imports)
 
 export default function RootLayout({
   children,
@@ -23,19 +25,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
-        className={`${font.variable} antialiased bg-background text-foreground`}
+        className={`${display.variable} ${mono.variable} antialiased bg-background text-foreground`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <FloatingCats />
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );

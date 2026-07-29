@@ -2,11 +2,9 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { cn } from "@/lib/utils";
-import { ModeToggle } from "@/components/mode-toggle";
 
 const navItems = [
     { name: "About", href: "#about" },
@@ -16,80 +14,76 @@ const navItems = [
 ];
 
 export function Navbar() {
-    const [isScrolled, setIsScrolled] = React.useState(false);
-
-    React.useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-
     return (
-        <header
-            className={cn(
-                "fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent",
-                isScrolled
-                    ? "bg-background/80 backdrop-blur-md border-border py-2 shadow-sm"
-                    : "bg-transparent py-4"
-            )}
-        >
-            <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+        <header className="fixed top-0 w-full z-50 bg-cream border-b-2 border-ink">
+            <div className="container mx-auto px-4 md:px-6 flex items-center justify-between h-14">
                 <Link
                     href="/"
-                    className="text-xl font-bold tracking-tighter hover:opacity-80 transition-opacity"
+                    className="font-mono font-bold text-lg bg-ink text-acid px-2 py-0.5 hover:bg-coral hover:text-cream transition-colors"
                 >
-                    CP<span className="text-primary">.</span>
+                    CP_
                 </Link>
 
                 {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-6">
-                    {navItems.map((item) => (
+                <nav className="hidden md:flex items-center gap-1">
+                    {navItems.map((item, i) => (
                         <Link
                             key={item.name}
                             href={item.href}
-                            className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                            className="font-mono text-xs font-semibold uppercase tracking-wider px-3 py-2 hover:bg-acid transition-colors"
                         >
-                            {item.name}
+                            <span className="text-coral">0{i + 1}/</span> {item.name}
                         </Link>
                     ))}
-                    <ModeToggle />
-                    <Button variant="default" size="sm" asChild>
-                        <Link href="/resume.pdf" target="_blank">
-                            Resume
-                        </Link>
-                    </Button>
+                    <button
+                        onClick={() => window.dispatchEvent(new Event("open-palette"))}
+                        className="ml-3 font-mono text-xs font-bold border-2 border-ink px-3 py-2 bg-card hover:bg-acid transition-colors"
+                        title="Open command palette"
+                    >
+                        ⌘K
+                    </button>
+                    <Link
+                        href="/resume.pdf"
+                        target="_blank"
+                        className="ml-1 font-mono text-xs font-bold uppercase tracking-wider bg-ink text-cream border-2 border-ink px-4 py-2 shadow-hard-acid press"
+                    >
+                        Resume ↓
+                    </Link>
                 </nav>
 
                 {/* Mobile Nav */}
                 <Sheet>
                     <SheetTrigger asChild className="md:hidden">
-                        <Button variant="ghost" size="icon">
-                            <Menu className="h-6 w-6" />
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="border-2 border-ink rounded-none shadow-hard press"
+                        >
+                            <Menu className="h-5 w-5" />
                             <span className="sr-only">Toggle menu</span>
                         </Button>
                     </SheetTrigger>
-                    <SheetContent side="right">
-                        <nav className="flex flex-col gap-4 mt-8">
-                            {navItems.map((item) => (
+                    <SheetContent
+                        side="right"
+                        className="bg-cream border-l-2 border-ink"
+                    >
+                        <nav className="flex flex-col gap-2 mt-10 px-4">
+                            {navItems.map((item, i) => (
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className="text-lg font-medium hover:text-primary transition-colors"
+                                    className="font-mono text-base font-semibold uppercase tracking-wider border-2 border-ink px-4 py-3 bg-card shadow-hard press"
                                 >
-                                    {item.name}
+                                    <span className="text-coral">0{i + 1}/</span> {item.name}
                                 </Link>
                             ))}
-                            <div className="flex items-center justify-between">
-                                <span className="text-sm font-medium">Theme</span>
-                                <ModeToggle />
-                            </div>
-                            <Button className="w-full mt-4" asChild>
-                                <Link href="/resume.pdf" target="_blank">
-                                    Resume
-                                </Link>
-                            </Button>
+                            <Link
+                                href="/resume.pdf"
+                                target="_blank"
+                                className="font-mono text-base font-bold uppercase tracking-wider bg-ink text-cream border-2 border-ink px-4 py-3 mt-2 text-center shadow-hard-acid press"
+                            >
+                                Resume ↓
+                            </Link>
                         </nav>
                     </SheetContent>
                 </Sheet>

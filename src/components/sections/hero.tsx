@@ -1,104 +1,113 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
+import { Terminal } from "@/components/terminal";
 
-import { LottieAnimation } from "@/components/ui/lottie-animation";
+const stickers = [
+    { text: "SDE-2 @ URBANPIPER", className: "bg-acid text-ink -rotate-2" },
+    { text: "BENGALURU, IN", className: "bg-cream text-ink rotate-1" },
+    { text: "OPEN TO WORK", className: "bg-coral text-cream -rotate-1" },
+];
 
 export function Hero() {
     return (
-        <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
-            {/* Frutiger Aero Background (Light Mode) */}
-            <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,#87CEEB,#E0F7FA)] dark:hidden">
-                {/* Glossy Overlay */}
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+        <section className="relative pt-14 border-b-2 border-ink paper-grid overflow-hidden">
+            {/* Decorative grid-breaking shapes */}
+            <div className="absolute top-24 right-[8%] w-24 h-24 bg-coral border-2 border-ink rotate-12 hidden lg:block" />
+            <div className="absolute bottom-16 left-[5%] w-16 h-16 bg-blueberry border-2 border-ink rounded-full hidden lg:block" />
+            <div className="absolute top-1/2 right-[20%] w-10 h-10 bg-acid border-2 border-ink -rotate-6 hidden lg:block" />
 
-                {/* Abstract Orbs/Bubbles */}
-                <div className="absolute top-20 left-20 w-64 h-64 bg-white/30 rounded-full blur-2xl mix-blend-overlay animate-pulse" />
-                <div className="absolute bottom-20 right-20 w-96 h-96 bg-green-400/20 rounded-full blur-3xl mix-blend-overlay animate-pulse delay-1000" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-b from-white/10 to-transparent rounded-full blur-3xl" />
-            </div>
+            <div className="container px-4 md:px-6 mx-auto py-20 md:py-28 relative z-10">
+                <div className="grid lg:grid-cols-[1fr_auto] gap-12 items-center max-w-6xl mx-auto">
+                    <div>
+                        <motion.p
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4 }}
+                            className="font-mono text-sm font-semibold text-coral mb-4"
+                        >
+                            ~/portfolio $ whoami<span className="animate-blink">▌</span>
+                        </motion.p>
 
-            {/* Deep Slate Background (Dark Mode) */}
-            <div className="absolute inset-0 -z-10 h-full w-full bg-background bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] hidden dark:block">
-                <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/20 opacity-20 blur-[100px]" />
-            </div>
-            <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse hidden dark:block" />
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-1000 hidden dark:block" />
+                        <motion.h1
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.1 }}
+                            className="font-display font-extrabold uppercase leading-[0.95] tracking-tight text-5xl md:text-7xl lg:text-8xl mb-6"
+                        >
+                            Chandra
+                            <br />
+                            Pratap
+                            <br />
+                            <span className="text-outline">Singh Chauhan</span>
+                        </motion.h1>
 
+                        <motion.div
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            className="flex flex-wrap gap-3 mb-8"
+                        >
+                            {stickers.map((s) => (
+                                <span
+                                    key={s.text}
+                                    className={`font-mono text-xs font-bold tracking-wider border-2 border-ink px-3 py-1.5 shadow-hard ${s.className}`}
+                                >
+                                    {s.text}
+                                </span>
+                            ))}
+                        </motion.div>
 
-            <div className="container px-4 md:px-6 flex flex-col items-center text-center gap-8 relative z-10">
-                {/* Profile Photo with Heavy Vignette */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6 }}
-                    className="relative w-64 h-64 md:w-80 md:h-80 mb-[-1rem]"
-                >
-                    {/* Outer glow effect */}
-                    <div className="absolute inset-0 rounded-full bg-primary/20 blur-3xl animate-pulse"></div>
+                        <motion.p
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.3 }}
+                            className="text-lg md:text-xl max-w-xl mb-10 leading-relaxed"
+                        >
+                            I build <b>backend systems</b> and <b>production AI</b> —
+                            event-driven pipelines, ClickHouse analytics at scale, and LLM
+                            agents (RAG, MCP, Claude Agent SDK) that actually ship.
+                        </motion.p>
 
-                    {/* Photo container with vignette */}
-                    <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-primary/30 shadow-2xl">
-                        <Image
-                            src="/profile-photo.jpg"
-                            alt="Chandra Pratap Singh Chauhan"
-                            fill
-                            className="object-cover"
-                            priority
-                        />
-                        {/* Heavy vignette overlay */}
-                        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-background/90"></div>
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/60"></div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.4 }}
+                            className="flex flex-wrap gap-4"
+                        >
+                            <Link
+                                href="#projects"
+                                className="font-mono font-bold uppercase tracking-wider bg-ink text-acid border-2 border-ink px-6 py-3 shadow-hard-coral press"
+                            >
+                                View Work →
+                            </Link>
+                            <Link
+                                href="/resume.pdf"
+                                target="_blank"
+                                className="font-mono font-bold uppercase tracking-wider bg-cream text-ink border-2 border-ink px-6 py-3 shadow-hard press"
+                            >
+                                Resume ↓
+                            </Link>
+                            <span className="hidden md:inline-flex items-center font-mono text-xs text-muted-foreground self-center">
+                                or press{" "}
+                                <kbd className="mx-1 border border-ink px-1.5 py-0.5 bg-card font-bold">
+                                    ⌘K
+                                </kbd>
+                            </span>
+                        </motion.div>
                     </div>
-                </motion.div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    <span className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-sm font-medium mb-4 inline-block">
-                        Available for hire
-                    </span>
-                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4">
-                        Building <span className="text-primary">AI-Powered</span> <br />
-                        Applications
-                    </h1>
-                </motion.div>
-
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="text-xl text-muted-foreground max-w-[600px]"
-                >
-                    Hi, I&apos;m <span className="text-foreground font-semibold">Chandra Pratap Singh Chauhan</span>.
-                    A Software Engineer specializing in Backend Development, AI Applications, and Data Engineering.
-                </motion.p>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    className="flex flex-col sm:flex-row gap-4"
-                >
-                    <Button size="lg" className="group" asChild>
-                        <Link href="#projects">
-                            View Projects
-                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </Link>
-                    </Button>
-                    <Button size="lg" variant="outline" asChild>
-                        <Link href="/resume.pdf" target="_blank">
-                            Download Resume
-                            <Download className="ml-2 h-4 w-4" />
-                        </Link>
-                    </Button>
-                </motion.div>
+                    {/* Interactive terminal — it actually works */}
+                    <motion.div
+                        initial={{ opacity: 0, rotate: 5, scale: 0.92 }}
+                        animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="hidden lg:block w-full max-w-md"
+                    >
+                        <Terminal />
+                    </motion.div>
+                </div>
             </div>
         </section>
     );

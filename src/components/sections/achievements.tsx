@@ -1,70 +1,73 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Trophy, Award } from "lucide-react";
 
 const achievements = [
     {
-        title: "Amazon Gen AI Hackathon Winner",
-        description: "Engineered an MCP-backed PIP featuring global fuzzy search, keyboard navigation, and analytics tracking",
-        icon: Trophy,
-        year: "2024",
+        badge: "🏆 WINNER",
+        title: "Amazon Gen AI Hackathon",
+        description:
+            "Engineered an MCP-backed command palette (PIP) with global fuzzy search, keyboard navigation, and analytics tracking.",
+        accent: "bg-acid",
+        rotate: "-rotate-1",
     },
     {
-        title: "VTU Engineering Graduate",
-        description: "Bachelor of Engineering in Computer Science (2020-2024)",
-        icon: Award,
-        year: "2024",
+        badge: "🤖 IN PRODUCTION",
+        title: "AI systems that ship",
+        description:
+            "On-call incident intelligence (RAG + MCP) and a human-in-the-loop coding agent — running in production, not demos.",
+        accent: "bg-coral text-cream",
+        rotate: "rotate-1",
+    },
+    {
+        badge: "🎓 B.E. CSE",
+        title: "VTU, Computer Science",
+        description: "Bachelor of Engineering in Computer Science, 2020 – 2024.",
+        accent: "bg-blueberry text-cream",
+        rotate: "-rotate-1",
     },
 ];
 
 export function Achievements() {
     return (
-        <section id="achievements" className="py-20 bg-muted/30">
-            <div className="container px-4 md:px-6 mx-auto">
+        <section id="achievements" className="py-20 border-b-2 border-ink paper-grid">
+            <div className="container px-4 md:px-6 mx-auto max-w-5xl">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="text-center mb-12"
+                    className="mb-12"
                 >
-                    <h2 className="text-3xl font-bold tracking-tight mb-4">Achievements</h2>
-                    <p className="text-muted-foreground">Recognition and milestones.</p>
+                    <p className="font-mono text-sm font-bold text-coral mb-2">04 / ACHIEVEMENTS</p>
+                    <h2 className="font-display text-4xl md:text-5xl font-extrabold uppercase tracking-tight">
+                        Milestones
+                    </h2>
                 </motion.div>
 
-                <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {achievements.map((achievement, index) => {
-                        const Icon = achievement.icon;
-                        return (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                whileHover={{ y: -5 }}
+                <div className="grid md:grid-cols-3 gap-6">
+                    {achievements.map((achievement, index) => (
+                        <motion.div
+                            key={achievement.title}
+                            initial={{ opacity: 0, y: 24 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            className={`border-2 border-ink bg-card shadow-hard p-6 lift ${achievement.rotate}`}
+                        >
+                            <span
+                                className={`inline-block font-mono text-xs font-bold tracking-wider border-2 border-ink px-2 py-1 mb-4 shadow-hard ${achievement.accent}`}
                             >
-                                <Card className="h-full hover:border-primary transition-colors duration-300 bg-card/50 backdrop-blur-sm border-muted">
-                                    <CardHeader>
-                                        <div className="flex items-center gap-3 mb-2">
-                                            <div className="p-2 rounded-lg bg-primary/10">
-                                                <Icon className="w-5 h-5 text-primary" />
-                                            </div>
-                                            <span className="text-sm font-medium text-muted-foreground">
-                                                {achievement.year}
-                                            </span>
-                                        </div>
-                                        <CardTitle className="text-xl">{achievement.title}</CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <p className="text-muted-foreground">{achievement.description}</p>
-                                    </CardContent>
-                                </Card>
-                            </motion.div>
-                        );
-                    })}
+                                {achievement.badge}
+                            </span>
+                            <h3 className="font-display text-xl font-extrabold uppercase mb-2">
+                                {achievement.title}
+                            </h3>
+                            <p className="leading-relaxed text-muted-foreground">
+                                {achievement.description}
+                            </p>
+                        </motion.div>
+                    ))}
                 </div>
             </div>
         </section>

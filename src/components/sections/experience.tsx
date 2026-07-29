@@ -1,111 +1,104 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Briefcase } from "lucide-react";
 
 const experiences = [
     {
         company: "UrbanPiper",
-        role: "Software Engineer - II",
-        period: "Oct 2025 - Present",
-        location: "Bengaluru, Karnataka, India",
-        description: "Building intelligent automation and monitoring systems for the food delivery ecosystem.",
+        role: "Software Engineer II",
+        period: "Oct 2025 — Present",
+        location: "Bengaluru, India",
+        accent: "bg-acid",
         highlights: [
-            "Built EOC AI Intelligent Automation system that analyzes incoming engineering-on-call issues against historical data, suggests solutions, and integrates with Kibana MCP for log analysis",
-            "Implemented centralized alerting system for various events across ecosystem, enabling proactive merchant notifications",
-            "Contributed to a data rich micro-service which was a GraphQL layer wrapped around the main back-end built using FastAPI, MongoDB, Redis and Clickhouse",
-            "Designed and maintained unified monitoring dashboards providing real-time visibility into application health and performance metrics for multiple product teams on Grafana, ELK stack etc."
+            "Designed and built, solo, a company-wide AI incident-response system: structured Slack intake with automatic routing, GitHub integration tying each incident to its fix, and a RAG pipeline (pgvector embeddings, LLM reranking, Kibana MCP log retrieval) that surfaces similar past incidents to cut time-to-resolution.",
+            "Built a coding agent on the Claude Agent SDK that triages critical Sentry alerts, localizes the fault, and opens a reviewable PR with a candidate fix — human-in-the-loop, nothing deploys without review.",
+            "Built Janus — a dispute-recovery automation service for delivery-aggregator merchant portals (DoorDash, Uber Eats): browser + API automation (Playwright) that files order disputes end to end, guided by a calibrated win-probability model that prioritizes filings under monthly quota limits.",
+            "Built store uptime/downtime analytics from scratch on ClickHouse (AggregatingMergeTree materialized views) plus the real-time availability layer over a Menu Analyzer processing ~1.5M items / 30 min.",
+            "Automated store remediation with an \"Always-On\" recovery layer (anti-flap cooldowns, audited state machine) — saved ~$2,750 for a single merchant in a 3-week pilot (157 recoveries).",
+            "Built cross-service sync over Kafka event streaming for real-time multi-service consistency; debugged stuck consumers and ETL pods on Kubernetes.",
         ],
-        skills: ["FastAPI", "GraphQL", "MongoDB", "Redis", "ClickHouse", "Grafana", "ELK Stack", "AI/ML", "MCP"],
+        skills: ["Python", "FastAPI", "ClickHouse", "Kafka", "pgvector RAG", "MCP", "Claude Agent SDK", "Playwright", "Kubernetes"],
     },
     {
         company: "UrbanPiper",
-        role: "Software Engineer - I",
-        period: "Jul 2024 - Oct 2025",
-        location: "Bengaluru, Karnataka, India",
-        description: "Developed core backend infrastructure and distributed systems for Periscope and Atlas products.",
+        role: "Software Engineer I",
+        period: "Jul 2024 — Oct 2025",
+        location: "Bengaluru, India",
+        accent: "bg-coral text-cream",
         highlights: [
-            "Built Store Sync mechanism between Atlas and Periscope using Codex event streaming for real-time data consistency",
-            "Architected the core item availability tracking engine powering Periscope's downtime visibility products - a 4-state system with hierarchical schedule evaluation across store, category, and item levels",
-            "Contributed to Kubernetes operations including deployment configurations, resource optimization and debugging pod/service issues in a microservices architecture",
-            "Documented workflows to help the engineering and operations team"
+            "Built a merchant onboarding service that cut average go-live time from ~17 days to ~4 and onboarded ~260 clients — Hasura auto-exposing a GraphQL layer over Postgres, eliminating hand-written CRUD APIs.",
+            "Architected the alerting system from scratch (event gathering, roll-up, firing) for real-time, de-duplicated merchant notifications of store/item issues.",
+            "Led the Python 3.6 → 3.9 upgrade of a large legacy service, resolving dependency and compatibility breakage across the codebase.",
+            "Triaged dozens of SEV-1/SEV-2 production incidents across reporting, analytics, and reconciliation pipelines for enterprise brands in India, the UK, and MENA — including diagnosing silent ingestion data loss and running safe backfills.",
+            "Delivered Atlas (React) features end to end — a global command palette with fuzzy search (~1,150 opens, ~500 in-product navigations) — plus menu-platform APIs (access control, MENA Menu V2, Lightspeed POS OAuth).",
         ],
-        skills: ["Kubernetes", "Event Streaming", "Microservices", "Kafka", "Docker", "Backend Development"],
+        skills: ["Python", "Hasura", "PostgreSQL", "React", "Kafka", "Kubernetes", "ELK"],
     },
 ];
 
 export function Experience() {
     return (
-        <section id="experience" className="py-20">
-            <div className="container px-4 md:px-6 mx-auto">
+        <section id="experience" className="py-20 border-b-2 border-ink paper-grid">
+            <div className="container px-4 md:px-6 mx-auto max-w-5xl">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="text-center mb-12"
+                    className="mb-12"
                 >
-                    <h2 className="text-3xl font-bold tracking-tight mb-4">Experience</h2>
-                    <p className="text-muted-foreground">My professional journey so far.</p>
+                    <p className="font-mono text-sm font-bold text-coral mb-2">02 / EXPERIENCE</p>
+                    <h2 className="font-display text-4xl md:text-5xl font-extrabold uppercase tracking-tight">
+                        Where I&apos;ve Shipped
+                    </h2>
                 </motion.div>
 
-                <div className="max-w-3xl mx-auto relative pl-8 md:pl-0">
-                    {/* Vertical Line */}
-                    <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-border transform -translate-x-1/2 hidden md:block" />
-                    <div className="absolute left-0 top-0 bottom-0 w-px bg-border md:hidden" />
-
+                <div className="space-y-10">
                     {experiences.map((exp, index) => (
-                        <motion.div
+                        <motion.article
                             key={index}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 24 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className={`relative mb-12 md:flex ${index % 2 === 0 ? "md:flex-row-reverse" : ""
-                                }`}
+                            className="border-2 border-ink bg-card shadow-hard-lg"
                         >
-                            {/* Timeline Dot */}
-                            <div className="absolute left-0 md:left-1/2 w-4 h-4 bg-primary rounded-full transform -translate-x-[9px] md:-translate-x-1/2 mt-6 border-4 border-background z-10" />
+                            <header className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-ink px-5 md:px-7 py-4 bg-cream">
+                                <div>
+                                    <h3 className="font-display text-2xl font-extrabold uppercase">
+                                        {exp.role}
+                                    </h3>
+                                    <p className="font-mono text-sm">
+                                        {exp.company} · {exp.location}
+                                    </p>
+                                </div>
+                                <span
+                                    className={`font-mono text-xs font-bold border-2 border-ink px-3 py-1.5 shadow-hard ${exp.accent}`}
+                                >
+                                    {exp.period}
+                                </span>
+                            </header>
 
-                            {/* Content Spacer */}
-                            <div className="md:w-1/2" />
+                            <ul className="px-5 md:px-7 py-6 space-y-3">
+                                {exp.highlights.map((highlight, idx) => (
+                                    <li key={idx} className="flex gap-3 leading-relaxed">
+                                        <span className="font-mono text-coral font-bold shrink-0">▸</span>
+                                        <span>{highlight}</span>
+                                    </li>
+                                ))}
+                            </ul>
 
-                            {/* Card */}
-                            <div className={`md:w-1/2 ${index % 2 === 0 ? "md:pl-12" : "md:pr-12"} pl-8`}>
-                                <Card className="bg-card/50 backdrop-blur-sm border-muted hover:border-primary/50 transition-colors">
-                                    <CardHeader>
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <Briefcase className="w-4 h-4 text-primary" />
-                                            <span className="text-sm text-muted-foreground">{exp.period}</span>
-                                        </div>
-                                        <CardTitle className="text-xl">{exp.role}</CardTitle>
-                                        <div className="text-lg font-medium text-primary">{exp.company}</div>
-                                        <div className="text-sm text-muted-foreground">{exp.location}</div>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <p className="text-muted-foreground mb-4">{exp.description}</p>
-                                        {exp.highlights && exp.highlights.length > 0 && (
-                                            <ul className="list-disc list-inside space-y-2 mb-4 text-sm text-muted-foreground">
-                                                {exp.highlights.map((highlight, idx) => (
-                                                    <li key={idx} className="leading-relaxed">{highlight}</li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                        <div className="flex flex-wrap gap-2">
-                                            {exp.skills.map((skill) => (
-                                                <span
-                                                    key={skill}
-                                                    className="text-xs px-2 py-1 rounded-md bg-secondary text-secondary-foreground"
-                                                >
-                                                    {skill}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </div>
-                        </motion.div>
+                            <footer className="px-5 md:px-7 pb-6 flex flex-wrap gap-2">
+                                {exp.skills.map((skill) => (
+                                    <span
+                                        key={skill}
+                                        className="font-mono text-xs border border-ink px-2 py-1 bg-cream"
+                                    >
+                                        {skill}
+                                    </span>
+                                ))}
+                            </footer>
+                        </motion.article>
                     ))}
                 </div>
             </div>
