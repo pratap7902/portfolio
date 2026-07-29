@@ -21,6 +21,62 @@ export type Post = {
 
 export const posts: Post[] = [
     {
+        slug: "how-is-solved-what-is-the-job",
+        title: "AI solved HOW. The whole job is now WHAT.",
+        description:
+            "A person who doesn't write code shipped a real, working dashboard — and tellingly, added a color picker nobody asked for. That story contains the entire shift: building is commoditized, and the scarce skill is now knowing what's worth building at all.",
+        date: "2026-07-30",
+        readingMinutes: 6,
+        tags: ["opinion", "product", "builder", "ai"],
+        blocks: [
+            {
+                type: "p",
+                text: "A colleague told me a story recently that I haven't been able to stop thinking about. Someone on their side of the business — a non-technical person who, by their own admission, doesn't know the first thing about writing code — sat down with AI tooling and built a fully functional analytics dashboard. Not a toy. It ran real queries across a full year of data, aggregations and all, and returned answers people actually used. And then, unprompted, they polished it: they added a color picker so you could theme the charts.",
+            },
+            {
+                type: "quote",
+                text: "Sit with that. Someone who can't write a line of code produced working analytics over a year of data — and had spare capacity to gold-plate it with a feature nobody requested. That single anecdote contains the entire shift in our craft.",
+            },
+            { type: "h", text: "The HOW just stopped being the moat" },
+            {
+                type: "p",
+                text: "For as long as software has existed, the hard, valuable, gatekept skill was HOW: how do you actually make the machine do the thing? How do you write the query, wire the API, render the chart, ship it somewhere real? That difficulty is what a career in engineering was built on. If a person with zero coding background can now produce a genuinely functional data product in an afternoon, the uncomfortable truth is that the HOW — the act of building — is being commoditized in front of us. It isn't gone, but it's no longer the scarce thing, and scarcity is where value lives.",
+            },
+            {
+                type: "p",
+                text: "This is disorienting if your professional identity is 'I'm the person who can build it.' That skill isn't worthless, but it's deflating in value the way any skill does once a tool makes it broadly accessible. Betting your career on being good at HOW, right now, is like getting really good at a task that's actively being automated. The ground is moving.",
+            },
+            { type: "h", text: "But look again at the color picker" },
+            {
+                type: "p",
+                text: "Here's the half of the story everyone skips. That color picker is the punchline. When building becomes effortless, the failure mode isn't that people can't produce — it's that they produce the wrong thing beautifully. Nobody needed to theme the charts. It was effort spent because the effort was available, not because it mattered. Cheap building doesn't automatically create value; it just as easily creates polished things that solve no real problem.",
+            },
+            {
+                type: "p",
+                text: "So the commoditization of HOW doesn't make judgment less important — it makes judgment the entire game. When anyone can build anything, the only thing that separates useful work from noise is knowing WHAT is worth building, and WHY it matters to the person on the other end. That's not a soft skill you sprinkle on top of engineering. It is now the hard skill.",
+            },
+            { type: "h", text: "WHAT is harder to learn than HOW ever was" },
+            {
+                type: "p",
+                text: "We under-rate how difficult WHAT is precisely because we spent decades letting HOW consume all our attention. Finding the right problem means talking to the people who have it, distinguishing what they say they want from what they actually need, killing your own clever ideas when reality doesn't back them, and having the taste to know when something is worth doing at all. There's no autocomplete for that. AI can write the query; it can't tell you the query was the wrong question.",
+            },
+            {
+                type: "ul",
+                items: [
+                    "Fall in love with the problem, not your solution. The solution is now cheap; the problem is where the scarcity is.",
+                    "Talk to the end customer before you build, not after. WHAT is discovered in their reality, not invented at your desk.",
+                    "Ask 'should this exist?' before 'how do I build it?' The second question is nearly free to answer now; the first is the one that matters.",
+                    "Measure whether it landed. Adoption and impact tell you if you found the right WHAT — a dashboard nobody opens is a color picker with extra steps.",
+                ],
+            },
+            { type: "h", text: "The product developer mindset" },
+            {
+                type: "p",
+                text: "This is why I've stopped thinking of myself as someone who writes code and started thinking of myself as someone who finds problems worth solving and then solves them — using code, using AI, using whatever the loop needs. The code is the cheap part. The craft is upstream of it now: in choosing the right thing to build, and downstream of it: in reading whether it actually helped. The engineers who thrive from here won't be the ones with the best answer to HOW. That question is getting answered for all of us. They'll be the ones who are relentlessly, unfashionably good at WHAT — and who never mistake the ability to build for a reason to.",
+            },
+        ],
+    },
+    {
         slug: "the-rise-of-the-builder",
         title: "The handoff is the tax: why development is collapsing into the builder",
         description:
