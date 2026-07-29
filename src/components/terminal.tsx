@@ -24,6 +24,7 @@ const HELP = [
     "  ls          — sections; `open <section>` to jump",
     "  resume      — grab the PDF",
     "  contact     — reach me",
+    "  blog        — field notes / write-ups",
     "  gh          — live github activity",
     "  sudo hire-me — you know what to do",
     "  clear       — clean up",
@@ -50,7 +51,7 @@ const NEOFETCH = [
 
 const COMMANDS = [
     "help", "whoami", "neofetch", "stack", "projects", "ls", "open",
-    "resume", "contact", "gh", "clear", "matrix", "party", "sudo hire-me", "sudo su",
+    "resume", "contact", "blog", "gh", "clear", "matrix", "party", "sudo hire-me", "sudo su",
 ];
 
 const SECTIONS = ["about", "experience", "projects", "achievements", "contact"];
@@ -168,6 +169,13 @@ function run(raw: string): { out: string[]; effect?: () => void; async?: Promise
         return {
             out: ["opening resume.pdf ..."],
             effect: () => window.open("/resume.pdf", "_blank"),
+        };
+    if (cmd === "blog")
+        return {
+            out: ["cd ~/blog ...", "opening field notes ..."],
+            effect: () => {
+                window.location.href = "/blog";
+            },
         };
     if (cmd === "contact")
         return {

@@ -18,6 +18,13 @@ const ACTIONS: Action[] = [
     { label: "Go to Achievements", hint: "04", run: scrollTo("achievements") },
     { label: "Go to Contact", hint: "05", run: scrollTo("contact") },
     {
+        label: "Read the Blog / Field Notes",
+        hint: "→",
+        run: () => {
+            window.location.href = "/blog";
+        },
+    },
+    {
         label: "Open Resume (PDF)",
         hint: "↗",
         run: () => window.open("/resume.pdf", "_blank"),
