@@ -21,6 +21,251 @@ export type Post = {
 
 export const posts: Post[] = [
     {
+        slug: "hotel-pms-1-a-hotel-is-a-distributed-system",
+        title: "A hotel is a distributed system (building a resort PMS, part 1/3)",
+        description:
+            "Part 1 of 3. I work on real-time order systems. On the side, solo, I built a full PMS and booking engine for a boutique resort — and discovered the hotel forces the exact coordination patterns from my day job: sagas, outbox, inbox, idempotency.",
+        date: "2026-07-30",
+        readingMinutes: 5,
+        tags: ["distributed-systems", "builder", "architecture", "series"],
+        blocks: [
+            {
+                type: "p",
+                text: "This is part 1 of a three-part series on building a resort property-management system solo, and what a hotel taught me about my day job. This part is about coordinating unreliable systems; part 2 is about time and identity; part 3 is about money, humans, and why the patterns transfer at all.",
+            },
+            {
+                type: "p",
+                text: "By day I work on real-time order systems — high-volume event pipelines, analytics, the plumbing that keeps a food-tech platform honest when orders, payments, and third-party partners are all flying at once. On the side, part-time and solo, I built something that on paper has nothing to do with that: a full property-management system and direct-booking engine for a boutique resort. I went in expecting to learn about hospitality. What actually happened is that the hotel taught me my own day job, from an angle I'd never seen it from.",
+            },
+            {
+                type: "quote",
+                text: "A hotel, it turns out, is a distributed system with money on the line and a dozen unreliable partners. Swap 'delivery aggregator' for 'travel agency' and 'payment gateway' for 'door-lock encoder', and it's the same problem I solve every day — just wearing a bathrobe.",
+            },
+            {
+                type: "p",
+                text: "Once I saw that, the architecture stopped being a hospitality question and became a distributed-systems question I already knew how to ask. The domain didn't need new patterns. It needed the same rigor I use for order pipelines, applied honestly to a messier, more human reality. Here are the patterns the hotel forced on me, and why each one is the same lesson my day job teaches.",
+            },
+            { type: "h", text: "Sagas, not transactions — because check-in touches five systems" },
+            {
+                type: "p",
+                text: "Checking a guest in isn't one action. It reserves a room, encodes a key card, opens a payment pre-authorization, flips the housekeeping and front-office state, maybe provisions the in-room TV and Wi-Fi. Those live in different systems, and no database transaction spans a physical lock encoder. So check-in, room-move, refund, and group-cancel can't be transactions — they're sagas, where every forward step carries a compensating action, and a half-finished flow lands in a duty-manager queue instead of silently corrupting state.",
+            },
+            {
+                type: "p",
+                text: "This is exactly the cross-service order flow from my day job: place order → reserve inventory → charge → notify the kitchen → dispatch. You can't wrap that in one transaction either, and the discipline is identical — model it as a saga with explicit compensations, not a hopeful sequence of calls.",
+            },
+            { type: "h", text: "Outbox and inbox — because every partner is unreliable" },
+            {
+                type: "p",
+                text: "The PMS never calls the lock encoder or the payment gateway inline from a business operation. It writes an outbox row in the same transaction as the business change, and a worker ships it with retries and an idempotency key until the partner acknowledges. Incoming events — a travel agency's booking webhook, a gateway callback, a lock's response — hit an inbox first, de-duplicated on (source, event id), because they arrive duplicated, out of order, and at 3 AM.",
+            },
+            {
+                type: "p",
+                text: "If you've ever consumed aggregator webhooks or emitted order events onto a bus, this is muscle memory: outbox for at-least-once delivery outward, inbox de-dup for at-least-once delivery inward, idempotency keys everywhere because the network will replay you. The hotel didn't teach me a new pattern here; it reminded me these patterns are non-negotiable the instant real money crosses a system boundary you don't control.",
+            },
+            {
+                type: "p",
+                text: "That's the coordination layer: sagas to sequence work across systems that can't share a transaction, and outbox/inbox to move messages reliably between them. But coordinating the work is only half of it. The harder, stranger half is modeling truth — what time did this happen, and who does it belong to. That's part 2.",
+            },
+        ],
+    },
+    {
+        slug: "hotel-pms-2-time-and-identity",
+        title: "Time and identity are not what you think (building a resort PMS, part 2/3)",
+        description:
+            "Part 2 of 3. The hotel's strangest lessons were about truth over time: a 'day' that isn't midnight to midnight, prices frozen at booking, and money that must follow the guest and never the room number.",
+        date: "2026-07-30",
+        readingMinutes: 5,
+        tags: ["distributed-systems", "data-modeling", "architecture", "series"],
+        blocks: [
+            {
+                type: "p",
+                text: "This is part 2 of a three-part series on building a resort PMS solo. Part 1 covered coordinating unreliable systems with sagas and outbox/inbox. This part is about the two things the hotel modeled in ways that quietly rewired how I think about every system: time, and identity.",
+            },
+            { type: "h", text: "Business date is not wall-clock time — the idea that rewired me" },
+            {
+                type: "p",
+                text: "This is the most domain-specific concept I hit, and the one that most changed how I think about time in any system. A hotel 'day' isn't midnight to midnight. It's the span between last night's end-of-day audit and the next one, and it can close at 3 AM. So a minibar charge posted at 2:30 AM belongs to yesterday's business date until the audit runs. Revenue reports key on business date; the audit trail keys on wall-clock time; the two are deliberately different fields on every posting.",
+            },
+            {
+                type: "quote",
+                text: "'When did this happen' and 'which day does it count for' are two different questions. Most night-audit bugs — and plenty of analytics bugs in my day job — come from systems that assume they're the same question.",
+            },
+            {
+                type: "p",
+                text: "I now see business-date-versus-event-time everywhere in my day-job pipelines: the difference between when an event arrived and which reporting period it belongs to is the same distinction, and getting it wrong is how you end up with numbers that don't reconcile at month boundaries.",
+            },
+            { type: "h", text: "Anchor to the stable entity — folios, not room numbers" },
+            {
+                type: "p",
+                text: "A guest who moves from room 312 to 415 at 8:45 PM should still get the bar tab posted at 9 PM. So charges, locks, and messages attach to the folio and reservation — the stable identity — never to the room number, which is incidental and can change under you. I've written this exact bug in data work: keying on a short, human-friendly identifier that turns out not to be stable or unique, and watching records get stitched to the wrong owner. Anchor to the thing that doesn't move. The room number is a label; the folio is the identity.",
+            },
+            { type: "h", text: "Immutable snapshots — don't reconstruct history from live state" },
+            {
+                type: "p",
+                text: "The nightly rate, the tax, the cancellation policy: all captured as an immutable snapshot at the moment of booking. The live rate plan can change tomorrow; the guest's reservation must not silently change with it. If I ever need to know what a guest agreed to, I read the snapshot, not the current global config.",
+            },
+            {
+                type: "p",
+                text: "This is the same lesson a nasty production bug once beat into me on the day job: never reconstruct a historical fact by reading mutable current state, because that state has moved on. A reservation's price is a point-in-time fact. So is an order's line-item detail. Snapshot the fact when it happens; don't recompute it later from a world that has changed.",
+            },
+            {
+                type: "p",
+                text: "So: anchor money to the stable identity, and freeze facts when they happen. Coordination (part 1) and truth-over-time (this part) are the machinery. Part 3 is about the two things that machinery ultimately serves — money and the humans touching it — and the bigger realization about why any of these patterns transferred from food-tech to hospitality at all.",
+            },
+        ],
+    },
+    {
+        slug: "hotel-pms-3-money-humans-and-the-transfer",
+        title: "The patterns don't belong to a domain (building a resort PMS, part 3/3)",
+        description:
+            "Part 3 of 3. No silent decisions on money, systems that survive the network dropping, and the real lesson: good distributed-systems thinking is domain-independent — and building solo is what makes you feel why.",
+        date: "2026-07-30",
+        readingMinutes: 5,
+        tags: ["distributed-systems", "builder", "architecture", "series"],
+        blocks: [
+            {
+                type: "p",
+                text: "This is part 3 of a three-part series on building a resort PMS solo. Part 1 was coordination (sagas, outbox, inbox); part 2 was time and identity (business date, snapshots, folio-anchoring). This part is about money, humans, and why every one of these patterns came with me from a completely different industry.",
+            },
+            { type: "h", text: "No silent decisions on money — override ledgers and confidence buckets" },
+            {
+                type: "p",
+                text: "Two more that the money forced. Every rule-bypass — voiding a charge, walking a guest, overriding a rate, re-running the audit — requires an authorization tier, a reason code, and a note, all append-only, all exportable. And every heuristic (is this a duplicate profile? a duplicate booking?) emits a confidence and routes to one of three buckets: auto-act, suggest-to-a-human, or ignore. No heuristic silently mutates guest data or money. Both are just the operational honesty any system handling money needs, hotel or not.",
+            },
+            { type: "h", text: "The desk can't stop when the internet does" },
+            {
+                type: "p",
+                text: "One more the physical world forced. A hotel's front desk, housekeeping, and restaurant cannot freeze because the connection dropped for thirty minutes — guests are still arriving and ordering. So the clients hold a local cache and write mutations to a local log while offline, then replay those through the same sagas on reconnect, surfacing genuine conflicts to a human rather than silently overwriting. Offline-first isn't a nicety here; it's the difference between a working desk and a lobby full of angry guests. It's the same conflict-reconciliation problem as any occasionally-connected system, made unavoidable by the fact that the building keeps operating whether the WiFi does or not.",
+            },
+            { type: "h", text: "The real lesson: the patterns are domain-independent" },
+            {
+                type: "p",
+                text: "The thing I keep coming back to is that I didn't have to invent anything. Sagas, outbox and inbox, idempotency, business-date modeling, snapshotting, stable keys, override ledgers — I brought every one of these from a completely different industry, and the hotel welcomed them because the underlying problem was the same: coordinate multiple unreliable systems, over an unreliable network, with money and real people on the line, and never lie about what happened. Good distributed-systems thinking doesn't belong to a domain. It's a way of respecting failure that transfers wholesale.",
+            },
+            {
+                type: "p",
+                text: "Building it solo, end to end, is what made that legible. On a big team you inherit the outbox and the idempotency middleware from a platform someone else owns, and you can go years using patterns without ever feeling why they exist. Rebuilding all of it alone, in a domain I didn't know, stripped away that inheritance. I had to understand each pattern well enough to re-derive it from the hotel's problems — and that re-derivation taught me my own day-job systems better than years of using them had.",
+            },
+            {
+                type: "quote",
+                text: "The fastest way to understand the patterns in your own domain is to go build them in one you don't know. Stripped of the familiar vocabulary, you find out whether you actually understood the pattern or just the local name for it.",
+            },
+            {
+                type: "p",
+                text: "I set out to build a hotel a booking system. I came back understanding order pipelines, event-time semantics, and idempotency more deeply than when I left. The transfer runs both ways — which is the whole case for being a builder who'll take an unfamiliar problem end to end, instead of staying safely inside the one domain you already know.",
+            },
+        ],
+    },
+    {
+        slug: "the-optimization-hiding-in-a-quota",
+        title: "A quota, a decaying curve, and the feature I almost missed",
+        description:
+            "An abstract allocation problem from real work: you can submit claims to an external approver who only says yes a limited number of times per period, and each yes gets harder to earn. The right policy was counterintuitive — and the win came from finding the right variable, not the fancier model.",
+        date: "2026-07-30",
+        readingMinutes: 8,
+        tags: ["optimization", "data-science", "modeling", "judgment"],
+        blocks: [
+            {
+                type: "p",
+                text: "Here's a problem, stripped to its bones. You have a batch of claims you can submit to an external decision-maker. Each claim is worth some amount of money if approved. The decision-maker only approves a limited number per period — a quota — and, crucially, the more you've already spent against that quota, the less likely the next one is to land. You can choose which claims to submit, and in what order. What's the policy that maximizes expected recovery?",
+            },
+            {
+                type: "p",
+                text: "It sounds like a tidy textbook exercise. In practice it was a chain of wrong assumptions, one genuinely dangerous data bug, and a final answer that was both simpler and stranger than where I started. This is the walk-through, because the lessons are portable to any constrained-approval or scarce-slot problem.",
+            },
+            { type: "h", text: "Wrong assumption #1: I could defer claims to a fresh budget" },
+            {
+                type: "p",
+                text: "My first instinct was obvious: if the quota resets each period, then hold the low-value claims and submit them next period against a fresh budget. Spread the load, waste nothing. Clean.",
+            },
+            {
+                type: "p",
+                text: "The data killed it flat. The quota didn't attach to when I submitted — it attached to the period each claim inherently belonged to. Deferring a claim didn't move it to next period's budget; it just spent the same budget later, after the easy wins were gone. An entire class of 'smart scheduling' strategies evaporated the moment I understood that the budget follows the item, not the action. Assumption one, dead — and it would have quietly cost money if I'd shipped it.",
+            },
+            {
+                type: "quote",
+                text: "Before you optimize the policy, make sure you actually understand what the constraint is attached to. I'd have built an elegant scheduler for a rule that didn't exist.",
+            },
+            { type: "h", text: "The join that lied to me" },
+            {
+                type: "p",
+                text: "To learn the true shape of the approval curve, I had to join two datasets: the record of what I'd submitted, and the record of what came back approved or denied. I joined them on what looked like the obvious identifier — a short ID present in both — and got a clean-looking result.",
+            },
+            {
+                type: "p",
+                text: "It was clean-looking and wrong. That short ID wasn't unique; it collided across different records, so the join silently stitched together rows that had nothing to do with each other. Every downstream number was quietly poisoned, and nothing threw an error — the most dangerous kind of bug, because it produces confident, plausible garbage. The fix was to join on the true globally-unique key instead. The moment I did, the numbers changed and the real curve appeared.",
+            },
+            {
+                type: "quote",
+                text: "A join is an assertion that two keys mean the same thing. If the key isn't unique, the join isn't a join — it's a random number generator with good manners.",
+            },
+            { type: "h", text: "The curve, and what it demanded" },
+            {
+                type: "p",
+                text: "With an honest join, the approval curve by position-within-budget was brutal and clear. Roughly: the first claim against a period's budget landed ~99% of the time, the second ~96%, the third crashed to ~33%, and everything after sat near a ~5% floor. This isn't a gentle decay you can average over — it's a cliff. The first two slots are almost free money; the rest is almost a coin flip you usually lose.",
+            },
+            {
+                type: "p",
+                text: "That shape forces the question: if only the earliest slots are valuable, and my claims are worth wildly different amounts, which claim gets which slot?",
+            },
+            { type: "h", text: "The answer is a 100-year-old inequality" },
+            {
+                type: "p",
+                text: "This is the rearrangement inequality, and it's the whole game. To maximize the sum of products of two sequences, you pair the largest of one with the largest of the other. Here: pair the biggest-dollar claims with the highest-probability (earliest) slots. Sort claims by value, descending, and pour them into the slots from the top. Same family of result as the classic cμ rule in scheduling — when service is scarce, serve the jobs where value × urgency is highest, first.",
+            },
+            {
+                type: "code",
+                lang: "text",
+                text: `slots (by position):   p1 ≈ 0.99   p2 ≈ 0.96   p3 ≈ 0.33   p4+ ≈ 0.05
+claims (by value):     $$$   $$   $$   $   ...
+
+optimal: biggest value → earliest slot
+  $$$  → p1      (0.99 · $$$   — capture the whale while it's near-certain)
+  $$   → p2
+  $$   → p3      (marginal; only if EV still beats the effort)
+  ...  → p4+     (usually not worth a slot at all)`,
+            },
+            { type: "h", text: "The trap that nearly inverted my logic" },
+            {
+                type: "p",
+                text: "Here's where I almost shot myself in the foot, and it's the subtlest point in the whole thing. I'd built a model to predict the probability a claim gets approved. The tempting move is to sort your claims by that predicted probability and submit the most-likely-to-win first. It feels right. It's backwards.",
+            },
+            {
+                type: "p",
+                text: "The model was predicting the probability of a slot — position 1 is ~99% no matter what you put in it — not the desirability of a claim. Sorting claims by that score just re-derives the position curve and tells you nothing about which claim belongs there. Value decides the ordering; the probability curve only tells you how many slots are worth spending at all. Confusing 'how likely is this slot to succeed' with 'how good is this claim' would have had me feeding small claims into the golden early slots because the model happily said they'd win. They would have won — and wasted the slot.",
+            },
+            {
+                type: "quote",
+                text: "Know what your model is actually predicting. Mine predicted the slot, not the claim — and the entire policy hinges on not confusing the two.",
+            },
+            { type: "h", text: "The feature beat the model" },
+            {
+                type: "p",
+                text: "When I did model the win probability properly, the interesting result wasn't the algorithm — it was the feature. The single most predictive variable was position within the depleting budget. On its own it carried an AUC around 0.94, comfortably beating the intuitive proxy I'd started with (the item's own timestamp, ~0.90) and the naive 'which submission period' feature (~0.87). A small three-feature model — position, budget remaining, and recent loss streak — hit ~90% accuracy; throwing a gradient-boosted model at it inched to ~92%. With the wrong headline feature, everything had plateaued several points lower no matter how fancy the model got.",
+            },
+            {
+                type: "p",
+                text: "That's the meta-lesson, and it's the one I keep relearning: the leverage was almost entirely in framing the right variable, not in the sophistication of the model on top of it. Choosing to measure 'position in a depleting budget' instead of 'time the item was created' moved the needle more than any modeling choice downstream of it. The judgment about what to measure dominated the machinery that measured it.",
+            },
+            { type: "h", text: "What travels beyond this problem" },
+            {
+                type: "ul",
+                items: [
+                    "Pin down what the constraint attaches to before optimizing — I nearly built a scheduler for a rule that didn't exist.",
+                    "A join on a non-unique key is silent corruption. Verify the key is actually unique, or the analysis is fiction with a spreadsheet's confidence.",
+                    "When a success curve is a cliff, not a slope, order is everything — and the rearrangement inequality tells you the order: biggest value into the best slots.",
+                    "Know precisely what your model predicts. A score for the slot is not a score for the item, and mixing them up inverts your policy.",
+                    "The right feature beats the fancier model. Spend your judgment on what to measure; the algorithm is usually the easy part.",
+                ],
+            },
+            {
+                type: "p",
+                text: "None of the individual pieces here are exotic — a textbook inequality, a join bug, a calibration curve. The work was in the sequence: distrusting the obvious strategy, distrusting the clean join, and distrusting my own model's score long enough to ask what it was really telling me. The math was the easy part. Knowing which math, and which variable, was the job.",
+            },
+        ],
+    },
+    {
         slug: "how-is-solved-what-is-the-job",
         title: "AI solved HOW. The whole job is now WHAT.",
         description:
