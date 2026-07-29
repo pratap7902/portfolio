@@ -14,9 +14,24 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Chandra Pratap Singh Chauhan — Backend & Applied AI",
+  metadataBase: new URL("https://www.singhpratap.dev"),
+  title: "Chandra Pratap Singh Chauhan — Builder · Backend & Applied AI",
   description:
-    "Software Engineer II at UrbanPiper. Backend systems, ClickHouse analytics, event-driven pipelines, and production LLM agents (RAG, MCP, Claude Agent SDK).",
+    "Builder who owns tech × design × product end to end. Specializes in backend systems and applied AI — ClickHouse analytics, event-driven pipelines, and production LLM agents (RAG, MCP, Claude Agent SDK). SDE-2 @ UrbanPiper.",
+  openGraph: {
+    title: "Chandra Pratap Singh Chauhan — Builder · Backend & Applied AI",
+    description:
+      "Builder who owns tech × design × product end to end. Specializes in backend systems and applied AI — ClickHouse analytics, event-driven pipelines, and production LLM agents (RAG, MCP, Claude Agent SDK). SDE-2 @ UrbanPiper.",
+    type: "website",
+    url: "https://www.singhpratap.dev",
+    siteName: "Chandra Pratap Singh Chauhan",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Chandra Pratap Singh Chauhan — Builder · Backend & Applied AI",
+    description:
+      "Builder who owns tech × design × product end to end. Specializes in backend systems and applied AI — ClickHouse analytics, event-driven pipelines, and production LLM agents (RAG, MCP, Claude Agent SDK). SDE-2 @ UrbanPiper.",
+  },
 };
 
 export default function RootLayout({

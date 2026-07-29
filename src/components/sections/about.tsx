@@ -46,14 +46,17 @@ export function About() {
                         Who I Am
                     </h2>
                     <div className="border-2 border-ink bg-cream shadow-hard p-6 md:p-8 text-lg leading-relaxed">
-                        Backend &amp; data-focused software engineer at{" "}
-                        <b>UrbanPiper</b> (Bengaluru) who owns systems end to end —
-                        event-driven pipelines, ClickHouse analytics,
-                        distributed-system consistency, and applied LLM/RAG.
-                        Solo-delivered company-wide platforms (engineering on-call
-                        intelligence, real-time store-availability analytics) running in
-                        production at scale. Core contributor to{" "}
-                        <b>Periscope</b> (downtime visibility) and{" "}
+                        <b>Builder</b> at <b>UrbanPiper</b> (Bengaluru) who owns{" "}
+                        <span className="font-mono font-bold bg-acid px-1">
+                            tech × design × product
+                        </span>{" "}
+                        end to end — from the schema to the pixels to the &quot;why are we
+                        building this.&quot; Specializes in backend systems and applied AI:
+                        event-driven pipelines, ClickHouse analytics, distributed-system
+                        consistency, and LLM/RAG in production. Solo-delivered
+                        company-wide platforms (engineering on-call intelligence,
+                        real-time store-availability analytics) running at scale. Core
+                        contributor to <b>Periscope</b> (downtime visibility) and{" "}
                         <b>Atlas</b> (merchant dashboard).
                     </div>
                 </motion.div>

@@ -1,4 +1,5 @@
 const ITEMS = [
+    "TECH × DESIGN × PRODUCT",
     "BACKEND ENGINEERING",
     "APPLIED AI",
     "CLICKHOUSE",

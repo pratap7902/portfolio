@@ -14,7 +14,7 @@ const experiences = [
             "Built a coding agent on the Claude Agent SDK that triages critical Sentry alerts, localizes the fault, and opens a reviewable PR with a candidate fix — human-in-the-loop, nothing deploys without review.",
             "Built Janus — a dispute-recovery automation service for delivery-aggregator merchant portals (DoorDash, Uber Eats): browser + API automation (Playwright) that files order disputes end to end, guided by a calibrated win-probability model that prioritizes filings under monthly quota limits.",
             "Built store uptime/downtime analytics from scratch on ClickHouse (AggregatingMergeTree materialized views) plus the real-time availability layer over a Menu Analyzer processing ~1.5M items / 30 min.",
-            "Automated store remediation with an \"Always-On\" recovery layer (anti-flap cooldowns, audited state machine) — saved ~$2,750 for a single merchant in a 3-week pilot (157 recoveries).",
+            "Automated store remediation with an \"Always-On\" recovery layer (anti-flap cooldowns, audited state machine) — 523 successful auto-recoveries and ~$10,200 in revenue saved for merchants to date.",
             "Built cross-service sync over Kafka event streaming for real-time multi-service consistency; debugged stuck consumers and ETL pods on Kubernetes.",
         ],
         skills: ["Python", "FastAPI", "ClickHouse", "Kafka", "pgvector RAG", "MCP", "Claude Agent SDK", "Playwright", "Kubernetes"],

@@ -7,7 +7,7 @@ import { Terminal } from "@/components/terminal";
 const stickers = [
     { text: "SDE-2 @ URBANPIPER", className: "bg-acid text-ink -rotate-2" },
     { text: "BENGALURU, IN", className: "bg-cream text-ink rotate-1" },
-    { text: "OPEN TO WORK", className: "bg-coral text-cream -rotate-1" },
+    { text: "TECH × DESIGN × PRODUCT", className: "bg-coral text-cream -rotate-1" },
 ];
 
 export function Hero() {
@@ -50,12 +50,18 @@ export function Hero() {
                             className="flex flex-wrap gap-3 mb-8"
                         >
                             {stickers.map((s) => (
-                                <span
+                                <motion.span
                                     key={s.text}
-                                    className={`font-mono text-xs font-bold tracking-wider border-2 border-ink px-3 py-1.5 shadow-hard ${s.className}`}
+                                    drag
+                                    dragMomentum
+                                    dragElastic={0.3}
+                                    whileDrag={{ scale: 1.15, rotate: 8, zIndex: 60 }}
+                                    whileHover={{ scale: 1.05 }}
+                                    title="drag me"
+                                    className={`inline-block font-mono text-xs font-bold tracking-wider border-2 border-ink px-3 py-1.5 shadow-hard cursor-grab active:cursor-grabbing touch-none ${s.className}`}
                                 >
                                     {s.text}
-                                </span>
+                                </motion.span>
                             ))}
                         </motion.div>
 
@@ -65,9 +71,11 @@ export function Hero() {
                             transition={{ duration: 0.5, delay: 0.3 }}
                             className="text-lg md:text-xl max-w-xl mb-10 leading-relaxed"
                         >
-                            I build <b>backend systems</b> and <b>production AI</b> —
-                            event-driven pipelines, ClickHouse analytics at scale, and LLM
-                            agents (RAG, MCP, Claude Agent SDK) that actually ship.
+                            I&apos;m a <b>builder</b> — I own <b>tech × design × product</b>{" "}
+                            end to end. My specialty: <b>backend systems</b> and{" "}
+                            <b>applied AI</b> — event-driven pipelines, ClickHouse analytics
+                            at scale, and LLM agents (RAG, MCP, Claude Agent SDK) that
+                            actually ship.
                         </motion.p>
 
                         <motion.div
@@ -95,6 +103,16 @@ export function Hero() {
                                     ⌘K
                                 </kbd>
                             </span>
+                        </motion.div>
+
+                        {/* Interactive terminal — mobile */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.5 }}
+                            className="lg:hidden w-full mt-10"
+                        >
+                            <Terminal compact />
                         </motion.div>
                     </div>
 

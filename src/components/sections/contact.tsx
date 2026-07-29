@@ -27,8 +27,9 @@ export function Contact() {
                         Let&apos;s <span className="text-acid">Talk</span>
                     </h2>
                     <p className="text-lg text-cream/80 max-w-xl mx-auto mb-10">
-                        Open to interesting backend + applied-AI problems. Whether you have
-                        a role, a question, or just want to say hi — my inbox is open.
+                        Something worth building — backend, applied AI, or the whole
+                        tech × design × product loop? A question, an idea, or just want
+                        to say hi — my inbox is open.
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
