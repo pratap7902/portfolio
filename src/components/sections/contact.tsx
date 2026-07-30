@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, Globe } from "lucide-react";
 import Link from "next/link";
+import posthog from "posthog-js";
 
 const socials = [
     { icon: Linkedin, href: "https://linkedin.com/in/pratap79", label: "LinkedIn" },
@@ -35,6 +36,7 @@ export function Contact() {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
                         <Link
                             href="mailto:contact@singhpratap.dev"
+                            onClick={() => posthog.capture("contact_email_clicked", { source: "contact_section" })}
                             className="font-mono font-bold uppercase tracking-wider bg-acid text-ink border-2 border-acid px-8 py-4 shadow-hard-coral press inline-flex items-center gap-2"
                         >
                             <Mail className="h-4 w-4" />
@@ -50,6 +52,7 @@ export function Contact() {
                                     key={social.label}
                                     href={social.href}
                                     target="_blank"
+                                    onClick={() => posthog.capture("social_link_clicked", { platform: social.label })}
                                     className="border-2 border-cream p-3 hover:bg-coral hover:border-coral transition-colors"
                                 >
                                     <Icon className="h-5 w-5" />

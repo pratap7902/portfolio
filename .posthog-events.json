@@ -1,0 +1,52 @@
+[
+  {
+    "event_name": "hero_cta_clicked",
+    "event_description": "Visitor clicked the primary 'View Work →' call-to-action in the hero section.",
+    "file": "src/components/sections/hero.tsx"
+  },
+  {
+    "event_name": "resume_downloaded",
+    "event_description": "Visitor opened the resume PDF from the hero section.",
+    "file": "src/components/sections/hero.tsx"
+  },
+  {
+    "event_name": "resume_downloaded",
+    "event_description": "Visitor opened the resume PDF from the navbar.",
+    "file": "src/components/layout/navbar.tsx"
+  },
+  {
+    "event_name": "project_demo_clicked",
+    "event_description": "Visitor clicked the 'Visit ↗' demo link on a project card, includes project name.",
+    "file": "src/components/sections/projects.tsx"
+  },
+  {
+    "event_name": "contact_email_clicked",
+    "event_description": "Visitor clicked the primary email contact CTA in the contact section.",
+    "file": "src/components/sections/contact.tsx"
+  },
+  {
+    "event_name": "social_link_clicked",
+    "event_description": "Visitor clicked a social profile icon (LinkedIn, GitHub, Website) in the contact section.",
+    "file": "src/components/sections/contact.tsx"
+  },
+  {
+    "event_name": "command_palette_opened",
+    "event_description": "Visitor opened the ⌘K command palette via keyboard shortcut or button.",
+    "file": "src/components/command-palette.tsx"
+  },
+  {
+    "event_name": "command_palette_action_executed",
+    "event_description": "Visitor selected and executed an action from the command palette, includes action label.",
+    "file": "src/components/command-palette.tsx"
+  },
+  {
+    "event_name": "terminal_command_executed",
+    "event_description": "Visitor submitted a command in the interactive terminal widget, includes the command name.",
+    "file": "src/components/terminal.tsx"
+  },
+  {
+    "event_name": "blog_contact_clicked",
+    "event_description": "Visitor clicked the contact email link at the bottom of a blog post.",
+    "file": "src/app/blog/[slug]/page.tsx"
+  }
+]

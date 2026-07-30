@@ -3,6 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { Menu } from "lucide-react";
+import posthog from "posthog-js";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -46,6 +47,7 @@ export function Navbar() {
                     <Link
                         href="/resume.pdf"
                         target="_blank"
+                        onClick={() => posthog.capture("resume_downloaded", { source: "navbar" })}
                         className="ml-1 font-mono text-xs font-bold uppercase tracking-wider bg-ink text-cream border-2 border-ink px-4 py-2 shadow-hard-acid press"
                     >
                         Resume ↓
@@ -81,6 +83,7 @@ export function Navbar() {
                             <Link
                                 href="/resume.pdf"
                                 target="_blank"
+                                onClick={() => posthog.capture("resume_downloaded", { source: "navbar_mobile" })}
                                 className="font-mono text-base font-bold uppercase tracking-wider bg-ink text-cream border-2 border-ink px-4 py-3 mt-2 text-center shadow-hard-acid press"
                             >
                                 Resume ↓

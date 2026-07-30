@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import posthog from "posthog-js";
 
 type Line = { text: string; kind: "out" | "cmd" };
 
@@ -242,6 +243,8 @@ export function Terminal({ compact = false }: { compact?: boolean }) {
     }, [lines]);
 
     const submit = () => {
+        const cmd = input.trim().toLowerCase();
+        if (cmd) posthog.capture("terminal_command_executed", { command: cmd });
         const { out, effect, async: pending } = run(input);
         if (out[0] === "__CLEAR__") {
             setLines([]);

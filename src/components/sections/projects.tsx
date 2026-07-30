@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import posthog from "posthog-js";
 
 const projects = [
     {
@@ -100,6 +101,7 @@ export function Projects() {
                                 <Link
                                     href={project.demo}
                                     target="_blank"
+                                    onClick={() => posthog.capture("project_demo_clicked", { project_name: project.title })}
                                     className="font-mono text-sm font-bold uppercase tracking-wider text-center bg-ink text-cream border-2 border-ink px-4 py-2.5 shadow-hard-acid press"
                                 >
                                     Visit ↗

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import posthog from "posthog-js";
 
 type Action = {
     label: string;
@@ -160,13 +161,17 @@ export function CommandPalette() {
         const onKey = (e: KeyboardEvent) => {
             if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
                 e.preventDefault();
-                setOpen((o) => !o);
+                setOpen((prev) => {
+                    if (!prev) posthog.capture("command_palette_opened", { trigger: "keyboard" });
+                    return !prev;
+                });
                 setQuery("");
                 setActive(0);
             }
             if (e.key === "Escape") setOpen(false);
         };
         const onOpen = () => {
+            posthog.capture("command_palette_opened", { trigger: "button" });
             setOpen(true);
             setQuery("");
             setActive(0);
@@ -220,6 +225,7 @@ export function CommandPalette() {
     const flat = groups.flatMap((g) => g.rows);
 
     const runAction = (action: Action) => {
+        posthog.capture("command_palette_action_executed", { action_label: action.label });
         pushRecent(action.label);
         setOpen(false);
         action.run();

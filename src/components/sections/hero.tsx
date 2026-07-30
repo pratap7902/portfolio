@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import posthog from "posthog-js";
 import { Terminal } from "@/components/terminal";
 
 const stickers = [
@@ -86,6 +87,7 @@ export function Hero() {
                         >
                             <Link
                                 href="#projects"
+                                onClick={() => posthog.capture("hero_cta_clicked")}
                                 className="font-mono font-bold uppercase tracking-wider bg-ink text-acid border-2 border-ink px-6 py-3 shadow-hard-coral press"
                             >
                                 View Work →
@@ -93,6 +95,7 @@ export function Hero() {
                             <Link
                                 href="/resume.pdf"
                                 target="_blank"
+                                onClick={() => posthog.capture("resume_downloaded", { source: "hero" })}
                                 className="font-mono font-bold uppercase tracking-wider bg-cream text-ink border-2 border-ink px-6 py-3 shadow-hard press"
                             >
                                 Resume ↓

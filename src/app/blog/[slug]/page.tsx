@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { posts, getPost, type Block } from "@/lib/posts";
 import { JsonLd } from "@/components/json-ld";
+import { BlogContactLink } from "@/components/blog-contact-link";
 
 const BASE = "https://www.singhpratap.dev";
 
@@ -161,12 +162,7 @@ export default async function PostPage({
                     <p className="font-mono text-sm mb-3">
                         Built something similar, or want to argue with an approach here?
                     </p>
-                    <Link
-                        href="mailto:contact@singhpratap.dev"
-                        className="inline-block font-mono font-bold uppercase tracking-wider bg-acid text-ink border-2 border-acid px-5 py-2.5 shadow-hard-coral press"
-                    >
-                        contact@singhpratap.dev
-                    </Link>
+                    <BlogContactLink />
                 </div>
             </article>
         </main>
