@@ -154,9 +154,17 @@ function run(raw: string): { out: string[]; effect?: () => void; async?: Promise
                 "marudhar  — resort website + custom PMS → marudharresorts.com",
             ],
         };
-    if (cmd === "ls") return { out: [SECTIONS.map((s) => s + "/").join("  ")] };
+    if (cmd === "ls")
+        return { out: [[...SECTIONS, "blog"].map((s) => s + "/").join("  ")] };
     if (cmd.startsWith("open ") || cmd.startsWith("cd ")) {
         const target = cmd.split(/\s+/)[1]?.replace(/\/$/, "");
+        if (target === "blog")
+            return {
+                out: ["cd ~/blog ...", "opening field notes ..."],
+                effect: () => {
+                    window.location.href = "/blog";
+                },
+            };
         if (target && SECTIONS.includes(target))
             return {
                 out: [`navigating to #${target} ...`],
