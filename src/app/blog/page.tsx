@@ -6,6 +6,7 @@ export const metadata: Metadata = {
     title: "Field Notes — Chandra Pratap Singh Chauhan",
     description:
         "Engineering write-ups: reverse-engineering, backend systems, applied AI, and the things I couldn't find a good post about when I needed one.",
+    alternates: { canonical: "/blog" },
 };
 
 function fmt(iso: string) {

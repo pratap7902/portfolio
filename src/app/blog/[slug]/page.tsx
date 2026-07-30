@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { posts, getPost, type Block } from "@/lib/posts";
+import { JsonLd } from "@/components/json-ld";
+
+const BASE = "https://www.singhpratap.dev";
 
 export function generateStaticParams() {
     return posts.map((p) => ({ slug: p.slug }));
@@ -18,11 +21,13 @@ export async function generateMetadata({
     return {
         title: `${post.title} — Field Notes`,
         description: post.description,
+        alternates: { canonical: `/blog/${post.slug}` },
         openGraph: {
             title: post.title,
             description: post.description,
             type: "article",
             publishedTime: post.date,
+            url: `${BASE}/blog/${post.slug}`,
         },
     };
 }
@@ -80,8 +85,34 @@ export default async function PostPage({
     const post = getPost(slug);
     if (!post) notFound();
 
+    const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: post.title,
+        description: post.description,
+        datePublished: post.date,
+        dateModified: post.date,
+        url: `${BASE}/blog/${post.slug}`,
+        keywords: post.tags.join(", "),
+        author: {
+            "@type": "Person",
+            name: "Chandra Pratap Singh Chauhan",
+            url: BASE,
+        },
+        publisher: {
+            "@type": "Person",
+            name: "Chandra Pratap Singh Chauhan",
+            url: BASE,
+        },
+        mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": `${BASE}/blog/${post.slug}`,
+        },
+    };
+
     return (
         <main className="min-h-screen bg-background pb-24">
+            <JsonLd data={articleSchema} />
             <header className="border-b-2 border-ink bg-cream sticky top-0 z-40">
                 <div className="container mx-auto px-4 md:px-6 max-w-3xl h-14 flex items-center justify-between">
                     <Link
